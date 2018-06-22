@@ -6,26 +6,33 @@ export const InventoryContext = React.createContext()
 export class InventoryProvider extends React.PureComponent {
     state = {
         items: [],
-        add: item => {
-            const newItems = this.state.items.slice()
-            newItems.unshift( item )
+        add: (item) => {
+            const copyOfItems = this.state.copy()
+            // we use unshift to insert items into the front of the list
+            copyOfItems.unshift( item )
             this.setState({
-                items: newItems
+                items: copyOfItems
             })
         },
-        remove: index => {
-            this.state.items.splice( index, 1 )
+        copy: () => {
+            return this.state.items.slice()
+        },
+        remove: (index) => {
+            const copyOfItems = this.state.copy()
+            copyOfItems.splice( index, 1 )
             this.setState({
-                items: Object.assign([], this.state.items)
+                items: copyOfItems
             })
         },
         replace: (index, replacements) => {
-            replacements = replacements || []
-            const length = replacements.length
-            this.state.items.splice( index, length, replacements )
-            this.setState({
-                items: Object.assign([], this.state.items)
-            })
+            if( replacements !== undefined && replacements.length > 0 ) {
+                const length = replacements.length
+                const copyOfItems = this.state.copy()
+                this.copyOfItems.splice( index, length, replacements )
+                this.setState({
+                    items: copyOfItems
+                })
+            }
         }
     }
 
