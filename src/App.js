@@ -1,21 +1,24 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { InventoryProvider } from './InventoryContext'
+import Inventory from './Inventory'
 
 class App extends Component {
+
+  state = {}
+
+  componentWillMount() {
+    Promise.resolve(['test1', 'test2', 'test3']).then( data => {
+      this.setState( { items: data } )
+    })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <InventoryProvider items={this.state.items}>
+        <Inventory />
+      </InventoryProvider>
+    )
   }
 }
 
-export default App;
+export default App
