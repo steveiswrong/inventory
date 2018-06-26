@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { InventoryProvider } from './InventoryContext'
 import Inventory from './Inventory'
+import InventoryCount from "./InventoryCount"
 
 class App extends Component {
 
@@ -14,9 +15,12 @@ class App extends Component {
 
   render() {
     return (
-      <InventoryProvider items={this.state.items}>
-        <Inventory />
-      </InventoryProvider>
+      <React.Fragment>
+        <InventoryProvider items={this.state.items}>
+          <Inventory />
+          <InventoryCount />
+        </InventoryProvider>
+      </React.Fragment>
     )
   }
 }
